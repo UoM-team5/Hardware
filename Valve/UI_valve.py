@@ -10,10 +10,6 @@ LARGE_FONT= ("Verdana", 13)
 def write(x):
     arduino.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
-def close_valve():
-    write("0")
-def open_valve():
-    write("1")
 
 
 # UI 
@@ -65,11 +61,11 @@ class PageOne(tk.Frame):
         button1.pack()
 
         button2 = ttk.Button(self, text="close valve",
-         command=close_valve)
+         command=lambda: write("0"))
         button2.pack()
 
         button3 = ttk.Button(self, text="open valve",
-         command=open_valve)
+         command=lambda: write("1"))
         button3.pack()
 
 
