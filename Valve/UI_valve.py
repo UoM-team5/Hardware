@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import serial
 import time
+# 
 arduino = serial.Serial(port='COM7', baudrate=115200, timeout=.1)
 
 LARGE_FONT= ("Verdana", 13)
