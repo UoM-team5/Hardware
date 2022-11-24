@@ -12,11 +12,11 @@ counterclockwise maximum speed rotation
 
 Servo myservo;
 
-float ml = 10.0; // insert amount you want to pump
-float mlpersec = (0.0052*ml) + 0.6678;
+float ml = 6.0; // insert amount you want to pump
+float mlpersec = (0.0038*ml) + 0.5967;
 int pumping_time = (ml/mlpersec)*1000;
 int flag = 0;
-//int pumping_time = 15000;
+8// int pumping_time = 12500;
 
 void setup()
 {
@@ -28,7 +28,7 @@ void loop()
 {
   if (flag == 0)
   {
-    myservo.write(50); //Clockwise maximum speed rotation (0 degrees)
+    myservo.write(0); //Clockwise maximum speed rotation (0 degrees)
     delay(pumping_time);
     flag = 1;
    }else
