@@ -5,6 +5,7 @@ This class contains all of the functions needed to control the servo valves.
 ## Constructor
 ### Consutructor for Servo Valve
 Takes 1 parameter: int pin_number in Arduino board 
+
 Example: Pump servoPump(2)
 
 
