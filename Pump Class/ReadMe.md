@@ -13,16 +13,27 @@ Example: Pump stepperPump(5,2,8,0)
 
 ## Variables
 int pinNum: pin number in arduino (for servo only)
+
 bool pump_type: boolean variable to indicate the type of pump - servo = 0; stepper = 1
+
 float flowrate: variable to get a measurement of the flowrate (use get_flow_rate function)
+
 float volume: variable to indicate the amount of volume being pumped 
+
 bool dir: indicates the direction of the liquid (servo)
+
 int Stop: stopping angle for servo pump
+
 double conv_ratio: conversion ratio for servo pump
+
 double steps_per_ml: number of steps required to pump 1 ml (stepper)
+
 int StepsPerRev: number of steps in a revolution (stepper)
+
 int dirStep: pin number for direction of the pump (stepper)
+
 int Step: pin number with actual PWM signal (stepper)
+
 int EN: pin number to activate/deactivate stepper 
 
 
