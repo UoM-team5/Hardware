@@ -2,26 +2,29 @@
 
 class Valve{
   private:
-    int pos0;
-    int pos1; 
-    bool a;
-    int angle_0;
-    int angle_1;  
-    int pinSer;  // pin number (should be 2 vor the servo)
+    int posOpen = 0;
+    int posClose = 1; 
+    int posMid = 2;
+    int a = 0;
+    int angleMid = 90;
+    int angleOpen = 65;
+    int angleClose = 125;  
+    int pinSer;  // pin number (should be 2 for the servo)
     Servo myservo;
 
 
     
   public:
 // Constructor and initial settings
-    Valve(int pinServo);
+    Valve(int pinServo, int posOpen, int posClose):pinSer(pinServo), posOpen(posOpen), posClose(posClose){}
 
 
 
 // Setup
-  void setUp();
+    void setUp();
 
-
+// Set Valve position to 0 (open), 1 (closed), or 2 (middle)
+    void set_pos(int pos)
 
 // Set valve position to 1
     void set_pos1(void);
@@ -47,7 +50,7 @@ class Valve{
 
 
 // Get state of valve (0 or 1)
-    bool get_pos_digital(void);
+    int get_pos_digital(void);
 
 
 
