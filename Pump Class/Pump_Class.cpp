@@ -1,4 +1,5 @@
 #include <Servo.h>
+#include <Arduino.h>
 
 class Pump{
   private:
@@ -21,16 +22,14 @@ class Pump{
     float step2ml = 1648.8;
 
 
-    
   public:
+  
 // Constructor and initial settings - variable type_of_pump: 0 = servo, 1 = stepper
     Pump(int pinPump, bool type_of_pump):pinNum(pinPump),pump_type(type_of_pump){}
     Pump(int d, int s, int e, bool type_of_pump):dirStep(d), Step(s), EN(e), pump_type(type_of_pump){}
 
-
-
 // Setup
-    void setUp(void){
+    void Pump::setUp(void){
       if(pump_type == 0){
         serPump.attach(pinNum);
         serPump.write(Stop);
@@ -46,13 +45,13 @@ class Pump{
 
 
 // Set direction and volume of pump
-  void set_vol(float vol, bool direc){
+  void Pump::set_vol(float vol, bool direc){
     Pump::volume = vol;
     Pump::dir = direc;
     
     if(pump_type == 0){ // SERVO
       float mlpersec = (0.0038 * vol) + 0.5967;
-      int pumping_time = int((vol / mlpersec) * 1000);
+      int pumping_time = int((vol / mlpersec) * 1000*1.15);
       Pump::flowrate = mlpersec;
       if (direc == 1){
         serPump.write(0); //Clockwise maximum speed rotation (0 degrees)
@@ -67,7 +66,7 @@ class Pump{
 
     if(pump_type == 1){ // STEPPER
       digitalWrite(dirStep, direc); 
-      for (uint32_t i = 0; i < vol * steps_per_ml; i++) {
+      for (uint32_t i = 0; i < (vol+0.0155*vol-0.0026)*steps_per_ml; i++) {
         digitalWrite(Step, HIGH);
         delay(1);
         digitalWrite(Step, LOW);
@@ -80,7 +79,7 @@ class Pump{
 
 
 // Stop pumping
-  void stop_pumping(void){
+  void Pump::stop_pumping(void){
     if(pump_type == 0){ // Servo
       serPump.write(Stop);
     }
@@ -92,49 +91,49 @@ class Pump{
 
 
 // Set direction of pumping (no actual pumping); 1 = clockwise; 0 = anticlockwise
-  void set_dir(bool Direction){
+  void Pump::set_dir(bool Direction){
     dir = Direction;
   }
 
 
 
 // Get measurement for direction (0 for into reactor, 1 for reverse)
-  bool get_last_dir(){
+  bool Pump::get_last_dir(){
     return Pump::dir;
   }// End function
 
 
 
 // Get measurement for volume pumped (in ml)
-  double get_last_vol(){
+  double Pump::get_last_vol(){
     return Pump::volume;
   }// End function
 
 
 
 // Get measurement for flowrate of SERVO (in ml per seconds)
-  double get_flow_rate(){
+  double Pump::get_flow_rate(){
     return Pump::flowrate;
   }// End function
 
 
 
 // Set type of pump - SERVO = 0; STEPPER = 1
-  void set_pump_type(bool type_of_pump){
+  void Pump::set_pump_type(bool type_of_pump){
     pump_type = type_of_pump;
   }// End function
 
 
 
 // Get pump type - SERVO = 0; STEPPER = 1
-  bool get_pump_type(void){
+  bool Pump::get_pump_type(void){
     return Pump::pump_type;
   }
 
 
 
 // Set convertion ratio for servo pumps (for calibration)
-  void set_conv_ratio(double convertion){
+  void Pump::set_conv_ratio(double convertion){
     if(pump_type == 0){
       conv_ratio = convertion;
       //?????????????????????????????????????????????????????????????????????????????
@@ -145,7 +144,7 @@ class Pump{
 
 
 // Get convertion ratio (servo)
-  double get_conv_ratio(void){
+  double Pump::get_conv_ratio(void){
     if(pump_type == 0){
       return conv_ratio;
     }
@@ -155,7 +154,7 @@ class Pump{
 
 
 // Set the number of steps per ml in stepper pump (for calibration)
-  void set_steps_per_ml(double num_steps){
+  void Pump::set_steps_per_ml(double num_steps){
     if(pump_type == 1){
       steps_per_ml = num_steps;
     }
@@ -164,7 +163,7 @@ class Pump{
 
 
 // Get number of steps per ml (stepper)
-  double get_steps_per_nl(void){
+  double Pump::get_steps_per_nl(void){
     if(pump_type == 0){
       return steps_per_ml;
     }
@@ -175,19 +174,22 @@ class Pump{
 
 
 /*int flag=1;
-Pump mypump(12,0);
+Pump ServoPump(12,0);
 Pump StepPump(5,2,8,1);
 
 void setup(){
   Serial.begin(115200);
-  mypump.setUp();
+  ServoPump.setUp();
   StepPump.setUp();
 }
 
 void loop(){
   if(flag==1){
-    StepPump.set_vol(2.5,1);
-    mypump.set_vol(2.5,1);
+    //StepPump.set_vol(40,1);
+    ServoPump.set_vol(30,1);
     flag++;
+    
   }   
+  delay(100);
 }*/
+
