@@ -17,7 +17,7 @@ int ResetPin = 3;
 ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_Mixer, ResetPin);
 Pump P1(9);
 Valve myvalve(5, 65, 120);
-Shutter shutter(54, 6);
+Shutter shutter(54, 7);
 
 void setup() {
   // put your setup code here, to run once:
@@ -27,7 +27,10 @@ void setup() {
   Device.Start();
   myvalve.setUp();
   P1.setUp();
+  shutter.Initialise();
 }
+
+
 
 void loop() {
 
@@ -71,16 +74,16 @@ void loop() {
         Serial.println("The shutter number is: " + (String)Device.getShutter());
         switch (Device.getShutterPos()) {
           case 0:
-            Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
-            shutter.moveto(open, 0);
+            //Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
+            shutter.moveto(0, 0); //change 0 to 1 for control
             break;
           case 1:
-            Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
-            shutter.moveto(closed, 0);
+            //Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
+            shutter.moveto(120, 0); //change 0 to 1 for control
             break;
           case 2:
-            Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
-            shutter.moveto(open2, 0);
+            //Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
+            shutter.moveto(240, 0); //change 0 to 1 for control
             break;
           default:
             break;
