@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include <ServoTimer2.h>
-
+//#include <ServoTimer2.h>
+#include <Servo.h>
 
 
 enum state{
@@ -11,7 +11,7 @@ enum state{
 
 class Shutter{
         private: 
-        ServoTimer2 ShutterServo;
+        Servo ShutterServo;
         int input_pin, output_pin;
 
     public:

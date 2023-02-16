@@ -254,7 +254,7 @@ void ASerial::Shutter() {
   //Serial.println(shutter);
   rubbish = readStringuntil(Command, 'S');
   Command.remove(0, rubbish.length());
-  shutterPos = readStringuntil(Command, ' ').toFloat();
+  shutterPos = readStringuntil(Command, ' ').toInt();
   //Serial.println(shutterPos);
 }
 
@@ -349,7 +349,7 @@ bool ASerial::getMixerDir() {
 int ASerial::getShutter() {
   return shutter;
 }
-float ASerial::getShutterPos() {
+int ASerial::getShutterPos() {
   return shutterPos;
 }
 int ASerial::GetCommand() {

@@ -68,7 +68,7 @@ class ASerial {
     bool mixerDir;
 
     int shutter;
-    float shutterPos;
+    int shutterPos;
 
     void Pump();
     void Mixer();
@@ -146,6 +146,6 @@ class ASerial {
     bool getMixerDir();
 
     int getShutter();
-    float getShutterPos();
+    int getShutterPos();
 };
 #endif

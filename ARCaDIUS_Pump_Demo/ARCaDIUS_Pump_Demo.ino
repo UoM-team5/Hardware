@@ -1,5 +1,5 @@
 #include "ARCaDIUS_Serial.h"
-#include "Valve_Class.h"
+#include "Valve.h"
 #include "Pump.h"
 #include "Shutter.h"
 
@@ -70,15 +70,15 @@ void loop() {
       case SHUTTER:  
         Serial.println("The shutter number is: " + (String)Device.getShutter());
         switch (Device.getShutterPos()) {
-          case 0
+          case 0:
             Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
             shutter.moveto(open, 0);
             break;
-          case 1
+          case 1:
             Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
             shutter.moveto(closed, 0);
             break;
-          case 2
+          case 2:
             Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
             shutter.moveto(open2, 0);
             break;
