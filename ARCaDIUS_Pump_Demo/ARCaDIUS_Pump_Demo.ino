@@ -1,6 +1,7 @@
 #include "ARCaDIUS_Serial.h"
 #include "Valve_Class.h"
 #include "Pump.h"
+#include "Shutter.h"
 
 String DeviceDesc = "This is an example string";
 int Device_ID = 1001;
@@ -16,6 +17,7 @@ int ResetPin = 3;
 ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_Mixer, ResetPin);
 Pump P1(9);
 Valve myvalve(5, 65, 120);
+Shutter shutter(54, 6);
 
 void setup() {
   // put your setup code here, to run once:
@@ -64,10 +66,26 @@ void loop() {
             break;
         }
         break;
-      case SHUTTER: // Enter code for shutter here
+
+      case SHUTTER:  
         Serial.println("The shutter number is: " + (String)Device.getShutter());
-        Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
-        break;
+        switch (Device.getShutterPos()) {
+          case 0
+            Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
+            shutter.moveto(open, 0);
+            break;
+          case 1
+            Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
+            shutter.moveto(closed, 0);
+            break;
+          case 2
+            Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
+            shutter.moveto(open2, 0);
+            break;
+          default:
+            break;
+        }
+
       default: // Leave this, its just the default
         break;
     }
