@@ -15,7 +15,7 @@
     void Shutter::goto_open (double desired){
         Serial.println("goto_open");
         double Input = desired+26;
-        Serial.println((unsigned int)((0.728*Input)-19.105));
+        //Serial.println((unsigned int)((0.728*Input)-19.105));
         ShutterServo.write((unsigned int)((0.728*Input)-19.105));
         delay(500);
     };
@@ -33,7 +33,7 @@
     void Shutter::goto_controlled (double desired){
         uint16_t pos = ShutterServo.read();
         double diff=((desired)-(this->get()));
-        Serial.println(diff);
+        //Serial.println(diff);
         double Ki = 0;
         while ((abs(diff))>3){
             // Serial.println(diff);
