@@ -30,65 +30,65 @@ class Pump{
 
 
 // Setup
-    void setUp(void);
+    void setUp(void){};
 
 
 // Set direction and volume of pump
-  void set_vol(float vol, bool direc);
+  void set_vol(float vol, bool direc){};
 
 
 
 // Stop pumping
-  void stop_pumping(void);
+  void stop_pumping(void){};
 
 
 
 // Set direction of pumping (no actual pumping); 1 = clockwise; 0 = anticlockwise
-  void set_dir(bool Direction);
+  void set_dir(bool Direction){};
 
 
 
 // Get measurement for direction (0 for into reactor, 1 for reverse)
-  bool get_last_dir();
+  bool get_last_dir(){};
 
 
 
 // Get measurement for volume pumped (in ml)
-  double get_last_vol();
+  double get_last_vol(){};
 
 
 
 // Get measurement for flowrate of SERVO (in ml per seconds)
-  double get_flow_rate();
+  double get_flow_rate(){};
 
 
 
 // Set type of pump - SERVO = 0; STEPPER = 1
-  void set_pump_type(bool type_of_pump);
+  void set_pump_type(bool type_of_pump){};
 
 
 
 // Get pump type - SERVO = 0; STEPPER = 1
-  bool get_pump_type(void);
+  bool get_pump_type(void){};
 
 
 
 // Set convertion ratio for servo pumps (for calibration)
-  void set_conv_ratio(double convertion);
+  void set_conv_ratio(double convertion){};
 
 
 
 // Get convertion ratio (servo)
-  double get_conv_ratio(void);
+  double get_conv_ratio(void){};
 
 
 // Set the number of steps per ml in stepper pump (for calibration)
-  void set_steps_per_ml(double num_steps);
+  void set_steps_per_ml(double num_steps){};
 
 
 
 // Get number of steps per ml (stepper)
-  double get_steps_per_nl(void)
+  double get_steps_per_nl(void){};
 
 }; // End Class Pump
 
