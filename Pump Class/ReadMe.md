@@ -8,7 +8,7 @@ Takes 2 parameters in order: int pin_number in Arduino board and bool type_of_pu
 Example: Pump servoPump(2,0)
 ### Constructor for Stepper Pump
 Takes 4 parameters in order: int direction_pin (initialised to 5), int step_pin (initialised to 2), int enable_pin (initialised to 8), bool type_of_pump (1 for stepper)
-Example: Pump stepperPump(5,2,8,0)
+Example: Pump stepperPump(5,2,8,1)
 
 
 ## Variables
