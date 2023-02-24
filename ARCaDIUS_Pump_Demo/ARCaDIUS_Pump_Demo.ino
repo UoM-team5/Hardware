@@ -2,22 +2,24 @@
 #include "Valve.h"
 #include "Pump.h"
 #include "Shutter.h"
+#include "BubbleSensor.h"
 
 String DeviceDesc = "This is an example string";
 int Device_ID = 1001;
 int Sender_ID = 1000;
 int Num_of_Pumps = 2;
-int Num_of_Valves = 2;
-int Num_of_Shutter = 2;
+int Num_of_Valves = 0;
+int Num_of_Shutter = 1;
 int Num_of_Mixer = 1;
-int Num_of_Temp = 4;
-int Num_of_Bubble = 5;
+int Num_of_Temp = 0;
+int Num_of_Bubble = 1;
 int ResetPin = 3;
 
 ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_Mixer, ResetPin);
 Pump P1(9);
 Valve myvalve(5, 65, 120);
 Shutter shutter(54, 7);
+BubbleSensor bubble(A0, 6);
 
 void setup() {
   // put your setup code here, to run once:
@@ -28,6 +30,7 @@ void setup() {
   myvalve.setUp();
   P1.setUp();
   shutter.Initialise();
+  bubble.setupBS();
 }
 
 
@@ -36,6 +39,8 @@ void loop() {
 
   // Enter the subsystem code in the switch statement, delete all the serial prints.
   if (Device.GotCommand()) {
+    //[sID1000 rID1001 PK1 R]
+    Device.updateSensors(BUBBLE, 1, bubble.Status());
     switch (Device.GetCommand()) {
       case PUMP: // Enter code for pumping here
         Serial.println("The pump number is: " + (String)Device.getPump());
@@ -95,7 +100,6 @@ void loop() {
     delay(100);
     Device.FinishedCommand();
 
-    // This is how you update sensor values 1 to N, TEMP or BUBBLE
-    Device.updateSensors(TEMP, 1, 123.456);
   }
+
 }
