@@ -1,7 +1,7 @@
 #include "ARCaDIUS_Serial.h"
 #include <TimerOne.h>
 
-ASerial::ASerial(String DD, int rID, int sID, int P, int V, int I, int T, int B, int M, int Res) {
+ASerial::ASerial(String DD, int rID, int sID, int P, int V, int I, int T, int B, int L, int M, int Res) {
   ResPin = Res;
   digitalWrite(ResPin, HIGH);
   pinMode(ResPin, OUTPUT);
@@ -15,11 +15,13 @@ ASerial::ASerial(String DD, int rID, int sID, int P, int V, int I, int T, int B,
   NumIrr = I;
   NumTemp = T;
   NumBubble = B;
+  NumLDS = L;
   NumMixer = M;
   isWaiting = true;
   instance0_ = this;
   TempVal = new float[NumTemp];
   BubbleVal = new float[NumBubble];
+  LDSVal = new float[NumLDS];
   //attachInterrupt(digitalPinToInterrupt(intPin), serialInterrupt, FALLING);
   //Timer1.initialize(300000);
   for (int i = 0; i < NumTemp; i++) {
@@ -27,6 +29,9 @@ ASerial::ASerial(String DD, int rID, int sID, int P, int V, int I, int T, int B,
   }
   for (int i = 0; i < NumBubble; i++) {
     BubbleVal[i] = 0;
+  }
+  for (int i = 0; i < NumLDS; i++) {
+    LDSVal[i] = 0;
   }
 }
 
@@ -61,6 +66,7 @@ void ASerial::ReturnDetails() {
                  " M" + (String)NumMixer +
                  " T" + (String)NumTemp +
                  " B" + (String)NumBubble +
+                 " L" + (String)NumLDS +
                  " (" + DeviceDesc + ")]");
 
 }
@@ -259,7 +265,7 @@ void ASerial::Shutter() {
 }
 
 void ASerial::readSensors() {
-  int PK_size = (NumBubble + NumTemp) * 2;
+  int PK_size = (NumBubble + NumTemp + NumLDS) * 2;
   String SenVal = "[sID" + (String)Device_ID + " rID" + (String)Sender_ID + " PK" + (String)PK_size + " SEN";
   for (int i = 0; i < NumTemp; i++) {
     SenVal = SenVal + " T" + (String)(i + 1) + " S" + (String)TempVal[i];
@@ -267,12 +273,18 @@ void ASerial::readSensors() {
   for (int i = 0; i < NumBubble; i++) {
     SenVal = SenVal + " B" + (String)(i + 1) + " S" + (String)BubbleVal[i];
   }
+  for (int i = 0; i < NumLDS; i++) {
+    SenVal = SenVal + " B" + (String)(i + 1) + " S" + (String)LDSVal[i];
+  }
   SenVal = SenVal + "]";
   Serial.println(SenVal);
 }
 
 void ASerial::updateSensors(SENSOR s, int Num, float Val) {
   switch (s) {
+    case LDS:
+      LDSVal[Num-1] = Val;
+      break;
     case TEMP:
       TempVal[Num-1] = Val;
       break;
