@@ -15,7 +15,7 @@ enum operation {
 enum SENSOR {
   TEMP,
   BUBBLE,
-  LIQLEVEL,
+  LDS,
 };
 
 
@@ -46,12 +46,14 @@ class ASerial {
     int NumIrr;
     int NumTemp;
     int NumBubble;
+    int NumLDS;
     int NumMixer;
     int intPin;
     int ResPin;
 
     float* TempVal;
     float* BubbleVal;
+    float* LDSVal;
 
     enum operation op;
     enum SENSOR Sensor;
@@ -100,7 +102,7 @@ class ASerial {
     void analyse();
 
   public:
-    ASerial(String DD, int rID, int sID, int P, int V, int I, int T, int B, int M, int Res);
+    ASerial(String DD, int rID, int sID, int P, int V, int I, int T, int B, int L, int M, int Res);
 
     //Error handler
     void Error(int code);
@@ -142,7 +144,7 @@ class ASerial {
     bool getValveState();
 
     int getMixer();
-    float getMixerSpeed();
+    int getMixerSpeed();
     bool getMixerDir();
 
     int getShutter();

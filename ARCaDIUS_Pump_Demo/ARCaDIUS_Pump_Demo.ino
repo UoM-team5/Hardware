@@ -2,22 +2,30 @@
 #include "Valve.h"
 #include "Pump.h"
 #include "Shutter.h"
+#include "LDSensor.h"
+#include "BubbleSensor.h"
+#include "MixerMotor.h"
+
 
 String DeviceDesc = "This is an example string";
 int Device_ID = 1001;
 int Sender_ID = 1000;
 int Num_of_Pumps = 2;
-int Num_of_Valves = 2;
-int Num_of_Shutter = 2;
+int Num_of_Valves = 0;
+int Num_of_Shutter = 1;
 int Num_of_Mixer = 1;
-int Num_of_Temp = 4;
-int Num_of_Bubble = 5;
+int Num_of_Temp = 0;
+int Num_of_Bubble = 1;
+int Num_of_LDS = 1;
 int ResetPin = 3;
 
-ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_Mixer, ResetPin);
+ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_LDS, Num_of_Mixer, ResetPin);
 Pump P1(9);
 Valve myvalve(5, 65, 120);
 Shutter shutter(54, 7);
+LDSensor liquid(3);
+BubbleSensor bubble(A0, 6);
+MixerMotor MagMix(10,4,11);
 
 void setup() {
   // put your setup code here, to run once:
@@ -28,14 +36,19 @@ void setup() {
   myvalve.setUp();
   P1.setUp();
   shutter.Initialise();
+  bubble.setupBS();
+  liquid.SetUpLDS();
+  MagMix.SetUpMotor();
 }
 
 
 
 void loop() {
-
   // Enter the subsystem code in the switch statement, delete all the serial prints.
   if (Device.GotCommand()) {
+    //[sID1000 rID1001 PK1 R]
+    Device.updateSensors(BUBBLE, 1, bubble.Status());
+    Device.updateSensors(LDS, 1, liquid.StatusLDS());
     switch (Device.GetCommand()) {
       case PUMP: // Enter code for pumping here
         Serial.println("The pump number is: " + (String)Device.getPump());
@@ -49,11 +62,28 @@ void loop() {
             break;
         }
         break;
-      case MIXER: // Enter code for mixer here
+      case MIXER: //[sID1000 rID1001 PK3 M1 S1 D1]
         Serial.println("The mixer number is: " + (String)Device.getMixer());
         Serial.println("The mixer speed is: " + (String)Device.getMixerSpeed());
         Serial.println("The mixer direction is: " + (String)Device.getMixerDir());
+        switch (Device.getMixerSpeed()) {
+          case 1: 
+            MagMix.MotorHigh();
+            break;
+          case 2: 
+            MagMix.MotorMedium();
+            break;
+          case 3: 
+            MagMix.MotorSlow();
+            break;
+          case 4:
+            MagMix.StopMotor();
+            break;
+          default:
+            break;
+        }
         break;
+
       case VALVE: // Enter code for Valve here
         Serial.println("The valve number is: " + (String)Device.getValve());
         switch (Device.getValve()) {
@@ -95,7 +125,6 @@ void loop() {
     delay(100);
     Device.FinishedCommand();
 
-    // This is how you update sensor values 1 to N, TEMP or BUBBLE
-    Device.updateSensors(TEMP, 1, 123.456);
   }
+
 }
