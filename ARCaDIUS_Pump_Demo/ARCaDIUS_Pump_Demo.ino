@@ -4,6 +4,8 @@
 #include "Shutter.h"
 #include "LDSensor.h"
 #include "BubbleSensor.h"
+#include "MixerMotor.h"
+
 
 String DeviceDesc = "This is an example string";
 int Device_ID = 1001;
@@ -23,6 +25,7 @@ Valve myvalve(5, 65, 120);
 Shutter shutter(54, 7);
 LDSensor liquid(3);
 BubbleSensor bubble(A0, 6);
+MixerMotor MagMix(10,4,11);
 
 void setup() {
   // put your setup code here, to run once:
@@ -35,12 +38,12 @@ void setup() {
   shutter.Initialise();
   bubble.setupBS();
   liquid.SetUpLDS();
+  MagMix.SetUpMotor();
 }
 
 
 
 void loop() {
-
   // Enter the subsystem code in the switch statement, delete all the serial prints.
   if (Device.GotCommand()) {
     //[sID1000 rID1001 PK1 R]
@@ -63,7 +66,24 @@ void loop() {
         Serial.println("The mixer number is: " + (String)Device.getMixer());
         Serial.println("The mixer speed is: " + (String)Device.getMixerSpeed());
         Serial.println("The mixer direction is: " + (String)Device.getMixerDir());
+        switch (Device.getMixerSpeed()) {
+          case 1: 
+            MagMix.MotorHigh();
+            break;
+          case 2: 
+            MagMix.MotorMedium();
+            break;
+          case 3: 
+            MagMix.MotorSlow();
+            break;
+          case 4:
+            MagMix.StopMotor();
+            break;
+          default:
+            break;
+        }
         break;
+
       case VALVE: // Enter code for Valve here
         Serial.println("The valve number is: " + (String)Device.getValve());
         switch (Device.getValve()) {

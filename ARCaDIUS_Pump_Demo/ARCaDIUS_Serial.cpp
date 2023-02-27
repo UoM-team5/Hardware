@@ -352,7 +352,7 @@ bool ASerial::getValveState() {
 int ASerial::getMixer() {
   return mixer;
 }
-float ASerial::getMixerSpeed() {
+int ASerial::getMixerSpeed() {
   return mixerSpeed;
 }
 bool ASerial::getMixerDir() {

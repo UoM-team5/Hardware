@@ -144,7 +144,7 @@ class ASerial {
     bool getValveState();
 
     int getMixer();
-    float getMixerSpeed();
+    int getMixerSpeed();
     bool getMixerDir();
 
     int getShutter();
