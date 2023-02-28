@@ -9,14 +9,14 @@
     }  
  
 
-  int LDSensor:: StatusLDS () {
+  bool LDSensor:: StatusLDS () {
     Liquid_level = digitalRead(Input); 
     if (Liquid_level == HIGH) {
       Serial.println("Liquid detected");
-      return 1;
+      return true;
     }
     else {
       Serial.println("No liquid detected");
-      return 0; 
+      return false; 
     }
   }
