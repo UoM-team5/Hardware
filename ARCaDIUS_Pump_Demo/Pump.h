@@ -26,46 +26,52 @@ class Pump {
   public:
     // Constructor and initial settings - variable type_of_pump: 0 = servo, 1 = stepper
     Pump(int pinPump): pinNum(pinPump), pump_type(0) {}
+    // Constructor for servo pump
+    // Takes pin number on arduino as parameter
+  
     Pump(int d, int s, int e): dirStep(d), Step(s), EN(e), pump_type(1) {}
+    // Constructor of stepper pump
+    // Takes number for direction pin, step (signal) pin, and enable pin in the arduino
 
-    // Setup
     void setUp(void);
+    // To be used in void setup()
 
-    // Set direction and volume of pump
     void set_vol(float vol, bool direc);
+    // Set direction (binary) and volume (in ml) to be pumped
+    // Works for both servo and stepper pumps
 
-    // Stop pumping
     void stop_pumping(void);
+    // Stop pumping immediately
 
-    // Set direction of pumping (no actual pumping); 1 = clockwise; 0 = anticlockwise
     void set_dir(bool Direction);
+    // Set direction of pumping (no actual pumping); 1 = clockwise; 0 = anticlockwise
 
-    // Get measurement for direction (0 for into reactor, 1 for reverse)
     bool get_last_dir();
+    // Get measurement for direction (0 for into reactor, 1 for reverse)
 
-    // Get measurement for volume pumped (in ml)
     double get_last_vol();
+    // Get measurement for last volume pumped (in ml)
 
-    // Get measurement for flowrate of SERVO (in ml per seconds)
     double get_flow_rate();
+    // Get measurement for flowrate of SERVO (in ml per seconds)
 
-    // Set type of pump - SERVO = 0; STEPPER = 1
     void set_pump_type(bool type_of_pump);
+    // Set type of pump - SERVO = 0; STEPPER = 1
 
-    // Get pump type - SERVO = 0; STEPPER = 1
     bool get_pump_type(void);
-
-    // Set convertion ratio for servo pumps (for calibration)
+    // Get pump type - SERVO = 0; STEPPER = 1
+  
     void set_conv_ratio(double convertion);
+    // Set convertion ratio for servo pumps (for calibration)
 
-    // Get convertion ratio (servo)
     double get_conv_ratio(void);
+    // Get convertion ratio (servo)
 
-    // Set the number of steps per ml in stepper pump (for calibration)
     void set_steps_per_ml(double num_steps);
+    // Set the number of steps per ml in stepper pump (for calibration)
 
-    // Get number of steps per ml (stepper)
     double get_steps_per_nl(void);
+    // Get number of steps per ml (stepper)
 
 }; // End Class Pump
 
