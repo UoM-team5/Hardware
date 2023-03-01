@@ -50,9 +50,7 @@ class Pump{
     Pump::dir = direc;
     
     if(pump_type == 0){ // SERVO
-      float mlpersec = (0.0038 * vol) + 0.5967;
-      int pumping_time = int((vol / mlpersec) * 1000*1.15);
-      Pump::flowrate = mlpersec;
+      long pumping_time = abs((2068.7 * (vol+0.5)) - 2288.1);
       if (direc == 1){
         serPump.write(0); //Clockwise maximum speed rotation (0 degrees)
         delay(pumping_time);
@@ -66,7 +64,7 @@ class Pump{
 
     if(pump_type == 1){ // STEPPER
       digitalWrite(dirStep, direc); 
-      for (uint32_t i = 0; i < (vol+0.0155*vol-0.0026)*steps_per_ml; i++) {
+      for (uint32_t i = 0; i < (9261.8*vol)+42.827; i++) {
         digitalWrite(Step, HIGH);
         delay(1);
         digitalWrite(Step, LOW);
@@ -109,12 +107,6 @@ class Pump{
     return Pump::volume;
   }// End function
 
-
-
-// Get measurement for flowrate of SERVO (in ml per seconds)
-  double Pump::get_flow_rate(){
-    return Pump::flowrate;
-  }// End function
 
 
 
