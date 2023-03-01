@@ -7,19 +7,18 @@ class Pump{
     int pinNum;     // pin number (should be 2 vor the servo)
     //enum pump_type {servo=0, stepper=1}; 
     bool pump_type; // 0 = servo; 1 = stepper
-    float flowrate = 0;
     float volume = 0;
     bool dir = 0;
     int Stop = 90; // Stopping value for servo pump
     double conv_ratio = 0.0052;   // conversions of servo (?) to ml
-    double steps_per_ml = 1648.8; // Number of steps per ml
+    double steps_per_ml = 9271.13 ; // Number of steps per ml
 
 
     int StepsPerRev = 3200;
     int dirStep = 5;            // Pin number for direction - SET TO 5
     int Step = 2;              // Pin number with actual signal - SET TO 2
     int EN = 8;                // Pin number to activate/deactivate - SET TO 8
-    float step2ml = 1648.8;
+    float step2ml = 9271.13 ;
 
 
   public:
