@@ -58,11 +58,6 @@ class Pump{
 
 
 
-// Get measurement for flowrate of SERVO (in ml per seconds)
-  double get_flow_rate(){};
-
-
-
 // Set type of pump - SERVO = 0; STEPPER = 1
   void set_pump_type(bool type_of_pump){};
 
