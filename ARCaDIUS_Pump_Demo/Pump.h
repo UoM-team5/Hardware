@@ -3,11 +3,13 @@
 
 #include <Arduino.h>
 #include "Servo.h"
+#include "BubbleSensor.h"
+#include "ARCaDIUS_Serial.h"
 
 class Pump {
   private:
     Servo serPump;
-    int pinNum;     // pin number (should be 2 vor the servo)
+    int pinNum;     // pin number (should be 2 for the servo)
     //enum pump_type {servo=0, stepper=1};
     bool pump_type; // 0 = servo; 1 = stepper
     float flowrate = 0;
@@ -32,6 +34,9 @@ class Pump {
     Pump(int d, int s, int e): dirStep(d), Step(s), EN(e), pump_type(1) {}
     // Constructor of stepper pump
     // Takes number for direction pin, step (signal) pin, and enable pin in the arduino
+
+    // Pump liquid with feedback from the bubble sensor
+    void pump_bubble(float vol, bool direc, BubbleSensor B, ASerial Device);
 
     void setUp(void);
     // To be used in void setup()
