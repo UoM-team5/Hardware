@@ -49,7 +49,7 @@ class Pump{
     Pump::dir = direc;
     
     if(pump_type == 0){ // SERVO
-      long pumping_time = abs((2068.7 * (vol+0.5)) - 2288.1);
+      long pumping_time = abs((2068.7 * (vol+0.6)) - 2288.1);
       if (direc == 1){
         serPump.write(0); //Clockwise maximum speed rotation (0 degrees)
         delay(pumping_time);
