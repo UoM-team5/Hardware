@@ -1,5 +1,6 @@
 #include "Pump.h"
 #include "Servo.h"
+#include "ARCaDIUS_Serial.h"
 
 // Setup
 void Pump::setUp(void) {
@@ -50,6 +51,111 @@ void Pump::set_vol(float vol, bool direc) {
   }// End if stepper
 
 }// End function
+
+
+
+// Pump liquid with feedback from the bubble sensor (Only works for stepper for now)
+void Pump::pump_bubble(float vol, bool direc, BubbleSensor B, ASerial Device) {
+  volume = abs(vol);
+  dir = direc;
+  Serial.println(volume);
+  if (pump_type == 1) { // STEPPER
+    Serial.println("This is a servo Pump");
+    digitalWrite(dirStep, direc);
+    for (uint32_t i = 0; i < (vol + 0.0155 * vol - 0.0026)*steps_per_ml; i++) {
+      digitalWrite(Step, HIGH);
+      delay(1);
+      digitalWrite(Step, LOW);
+      delay(1);
+      //if(Pump::B.Status()!=2){
+      if (B.Status() != 2) {
+        i--;
+      }
+    }
+  }// End if stepper
+
+  if (pump_type == 0) { // SERVO
+    float mlpersec = (0.0038 * volume) + 0.5967;
+    uint32_t pumping_time = abs((2068.7 * (vol + 0.5)) - 2288.1);
+    Serial.println("This is a servo Pump");
+    Serial.println(pumping_time);
+    flowrate = mlpersec;
+    long time1 = 0;
+    long time2 = 0;
+    long time3 = 0;
+    if (direc == 0) {
+      serPump.write(2500); //Clockwise maximum speed rotation (0 degrees)
+      while ((millis() - time1) < pumping_time) {
+        time2 = millis();
+        while (B.Status() != 2) {
+        }
+        time3 = millis();
+      }
+      delay(time3 - time2);
+    }
+
+    if (direc == 1) {
+      serPump.write(550); //Anti clockwise maximum speed rotation (0 degrees)
+      float total_time = 0;
+      float delta = 0;
+      float init_time = 0;
+      while (total_time < pumping_time) {
+        Device.updateSensors(BUBBLE, 1, B.Status());
+        delta = 0;
+        init_time = millis();
+        while (B.Status() == 2) {
+          Serial.println("Liquid detected");
+          //Measure the time for whih the sensor detects liquid
+          Device.updateSensors(BUBBLE, 1, B.Status());
+          if (millis()-init_time >= pumping_time){
+            break;
+          }
+        }
+        delta = millis() - init_time;
+        if(delta<10){
+          delta=0;
+        }
+        total_time = total_time + delta;
+        Serial.print("Total Time: ");
+        Serial.println(total_time);
+      }
+      serPump.write(Stop);
+    }
+
+
+    /*if (direc == 1) {
+      serPump.write(550); //Anti clockwise maximum speed rotation (0 degrees)
+      while (B.Status() != 2) {
+        // Pump while pipe gets filled with liquid
+        // Poll the measurement from the sensor
+        Device.updateSensors(BUBBLE, 1, B.Status());
+        Serial.println("Pipe is empty");
+      }
+      int time1 = millis(); // time at which tube is filled with liquid
+      Serial.println(time1);
+      while (millis() - time1 < pumping_time){
+        Serial.println("Pumping actual volume");
+        // wait while it pumps the actual amount of liquid that we want
+        if (B.Status() != 2) {
+          // If there are any bubbles in the liquid take time measurement
+          time2 = millis(); // Measurement of when bubble starts
+          Serial.println("Bubble Detected");
+          while (B.Status() != 2) {
+            // Poll the measurement from the sensor
+            Device.updateSensors(BUBBLE, 1, B.Status());
+            Serial.println("While loop checking if bubble is gone");
+          }
+          time3 = millis(); // Measurement of when bubble finishes
+        }
+      }
+      Serial.println("Extra time");
+      delay(time3-time2); // Delay by the time spent in bubbles
+      Serial.println("Extra time finished");
+      serPump.write(Stop);
+      }*/
+      
+  } //End if servo
+}// End Function Pump_Bubble
 
 
 
