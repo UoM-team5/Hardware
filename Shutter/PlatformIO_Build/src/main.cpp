@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <Servo.h>
-#define Analog_pin 54
+#define Analog_pin 14
 #define Servo_pin 6
 #include "Shutter.h"
 

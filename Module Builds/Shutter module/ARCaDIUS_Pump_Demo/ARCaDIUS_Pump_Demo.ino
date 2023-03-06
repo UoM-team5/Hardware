@@ -13,7 +13,7 @@ int Num_of_Bubble = 0;
 int ResetPin = 3;
 
 ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_Mixer, ResetPin);
-Shutter shutter(54, 7);
+Shutter shutter(14, 6);
 
 void setup() {
   // put your setup code here, to run once:
