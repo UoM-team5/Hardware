@@ -56,3 +56,21 @@
             this->goto_open(pos); 
         };
     };
+
+    void Shutter::timedExposure(state pos, unsigned long int exposure_time, bool controller){
+        double return_pos = this->get();
+        
+        if(controller) {
+            this->goto_controlled(pos);
+        }else{
+            this->goto_open(pos); 
+        };
+
+        delay(exposure_time);
+
+        if(controller) {
+            this->goto_controlled(return_pos);
+        }else{
+            this->goto_open(return_pos); 
+        };
+    }

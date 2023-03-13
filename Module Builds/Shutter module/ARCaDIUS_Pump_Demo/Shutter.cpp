@@ -13,7 +13,7 @@
         }
 
     void Shutter::goto_open (double desired){
-        Serial.println("goto_open");
+        //Serial.println("goto_open");
         double Input = desired+26;
         //Serial.println((unsigned int)((0.728*Input)-19.105));
         ShutterServo.write((unsigned int)((0.728*Input)-19.105));
@@ -45,7 +45,7 @@
             ShutterServo.write(pos);
             delay(150);
             diff=((desired)-(this->get()));
-            Serial.println(diff);
+            //Serial.println(diff);
         }
     };
 
@@ -56,3 +56,21 @@
             this->goto_open(pos); 
         };
     };
+
+    void Shutter::timedExposure(state pos, unsigned long int exposure_time, bool controller){
+        double return_pos = this->get();
+        
+        if(controller) {
+            this->goto_controlled(pos);
+        }else{
+            this->goto_open(pos); 
+        };
+
+        delay(exposure_time);
+
+        if(controller) {
+            this->goto_controlled(return_pos);
+        }else{
+            this->goto_open(return_pos); 
+        };
+    }

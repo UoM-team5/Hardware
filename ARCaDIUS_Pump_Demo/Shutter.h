@@ -43,5 +43,7 @@ class Shutter{
         // @param control: Set 0 to use goto_open, Set 1 to use goto_controlled
 
 
+        void timedExposure(state pos, unsigned int exposure_time, bool controller);
+
 
 };

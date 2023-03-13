@@ -19,7 +19,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   Serial.setTimeout(1000);
-  Serial.println("start");
+  //Serial.println("start");
   Device.Start();
   shutter.Initialise();
 }
@@ -44,9 +44,9 @@ void loop() {
       //   }
       //   break;
       case MIXER: // Enter code for mixer here
-        Serial.println("The mixer number is: " + (String)Device.getMixer());
-        Serial.println("The mixer speed is: " + (String)Device.getMixerSpeed());
-        Serial.println("The mixer direction is: " + (String)Device.getMixerDir());
+        //Serial.println("The mixer number is: " + (String)Device.getMixer());
+        //Serial.println("The mixer speed is: " + (String)Device.getMixerSpeed());
+        //Serial.println("The mixer direction is: " + (String)Device.getMixerDir());
         break;
       // case VALVE: // Enter code for Valve here
       //   Serial.println("The valve number is: " + (String)Device.getValve());
@@ -65,7 +65,7 @@ void loop() {
       //   break;
 
       case SHUTTER:  
-        Serial.println("The shutter number is: " + (String)Device.getShutter());
+        //Serial.println("The shutter number is: " + (String)Device.getShutter());
         switch (Device.getShutterPos()) {
           case 0:
             //Serial.println("The shutter position  is: " + (String)Device.getShutterPos());
