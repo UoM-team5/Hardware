@@ -1,4 +1,4 @@
-
+ 
 #include <ARCaDIUS_Serial.h>
 #include <Valve.h>
 #include <Shutter.h>
@@ -54,15 +54,15 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+// Need to add this into serial to communicate with UI
 //  if (Device.GotCommand()) {
 //    //[sID1000 rID1001 PK1 R]
 //    switch (Device.GetCommand()) {
 //      case WASH:
-      int i= 0;
+        int i= 0;
         while (i < 3){   // For now, spec values unknown, so test with this, proper code at the end of the code
-         //close shutter, need to find angle of closed state
-          shutter.goto_controlled(0);
+         //close shutter
+          shutter.goto_controlled(120);
           // pump in cleaning liquid
           P2.set_vol(40,1);  // Not sure which dir
           MagMix.MotorMedium();  
@@ -96,9 +96,9 @@ void loop() {
 //Divide liquid volume (grams) by molar mass = moles
 //moles x 6.022*10^23 = molecules
 /*
-desired_vol = 0.90 * 40;  // want 90% of liquid to be water
-mol = desired_vol/18;
-molecules = mol* 6.022*10^23; 
+float desired_vol = 0.90 * 40;  // want 90% of liquid to be water
+float mol = desired_vol/18;     
+float molecules = mol* 6.022  //*10^23; 
 while(highest_spec_reading<molecules){all the code inside while loop}
 */
 //useful links to understand mass spectometry and convertion
