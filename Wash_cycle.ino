@@ -19,6 +19,10 @@ int Num_of_Bubble = 0;
 int Num_of_LDS = 1;
 int ResetPin = 1;
 
+// Not for now
+//float opt_value = 0;
+//float massSpec_value = 0;
+
 
 ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_LDS, Num_of_Mixer, ResetPin);
 Pump P1(9);
@@ -56,14 +60,14 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (Device.GotCommand()) {
-    //[sID1000 rID1001 PK1 R]
-    switch (Device.GetCommand()) {
-      case WASH:
+//  if (Device.GotCommand()) {
+//    //[sID1000 rID1001 PK1 R]
+//    switch (Device.GetCommand()) {
+//      case WASH:
       int i= 0;
         while (i < 3){   // For now, spec values unknown, so test with this, proper code at the end of the code
          //close shutter, need to find angle of closed state
-          shutter.goto_controlled(0)
+          shutter.goto_controlled(0);
           // pump in cleaning liquid
           P2.set_vol(40,1);  // Not sure which dir
           MagMix.MotorMedium();  
@@ -88,7 +92,7 @@ void loop() {
           ++i;
 
         }
-  }
+//  }
 
 }
 
