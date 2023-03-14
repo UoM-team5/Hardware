@@ -19,11 +19,6 @@ int Num_of_Bubble = 0;
 int Num_of_LDS = 1;
 int ResetPin = 1;
 
-// Not for now
-//float opt_value = 0;
-//float massSpec_value = 0;
-
-
 ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_LDS, Num_of_Mixer, ResetPin);
 Pump P1(9);
 Pump P2(8);
