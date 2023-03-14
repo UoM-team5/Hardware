@@ -5,7 +5,7 @@
 #include <MixerMotor.h>
 #include <LDSensor.h>
 #include <BubbleSensor.h>
-#include <Pump_Class.h>
+#include <Pump.h>
 
 String DeviceDesc = "This is an example string";
 int Device_ID = 1001;
