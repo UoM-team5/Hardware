@@ -42,7 +42,7 @@ void Pump::set_vol(float vol, bool direc) {
 
   if (pump_type == 1) { // STEPPER
     digitalWrite(dirStep, direc);
-    for (uint32_t i = 0; i < vol * steps_per_ml; i++) {
+    for (uint32_t i = 0; i < (vol * steps_per_ml)-38.931; i++) {
       digitalWrite(Step, HIGH);
       delay(1);
       digitalWrite(Step, LOW);
