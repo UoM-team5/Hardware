@@ -15,13 +15,13 @@ void setup() {
 
 void loop() {
 
-  shutter.moveto(open, 0);
-  delay(2000);
-  shutter.moveto(closed, 0);
-  delay(2000);
-  shutter.moveto(open2, 0);
-  delay(2000);
-  shutter.moveto(closed, 0);
-  delay(2000);
+  // shutter.moveto(open, 0);
+  // delay(2000);
+  // shutter.moveto(closed, 0);
+  // delay(2000);
+  // shutter.moveto(open2, 0);
+  // delay(2000);
+  // shutter.moveto(closed, 0);
+  // delay(2000);
 
 }
