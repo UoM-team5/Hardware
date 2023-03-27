@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include "Servo.h"
-#include "BubbleSensor.h"
 #include "ARCaDIUS_Serial.h"
 
 class Pump {
@@ -17,7 +16,7 @@ class Pump {
     bool dir = 0;
     int Stop = 1500; // Stopping value for servo pump
     double conv_ratio = 0.0052;   // conversions of servo (?) to ml
-    double steps_per_ml = 9293.4; // Number of steps per ml
+    double steps_per_ml = 1648.8; // Number of steps per ml
 
     int StepsPerRev = 3200;
     int dirStep = 5;            // Pin number for direction - SET TO 5
@@ -34,9 +33,6 @@ class Pump {
     Pump(int d, int s, int e): dirStep(d), Step(s), EN(e), pump_type(1) {}
     // Constructor of stepper pump
     // Takes number for direction pin, step (signal) pin, and enable pin in the arduino
-
-    // Pump liquid with feedback from the bubble sensor
-    void pump_bubble(float vol, bool direc, BubbleSensor B, ASerial Device);
 
     void setUp(void);
     // To be used in void setup()
@@ -78,6 +74,9 @@ class Pump {
     double get_steps_per_nl(void);
     // Get number of steps per ml (stepper)
 
+    void pump_lds_input(float vol, bool direc, LDSensor S, ASerial Device);
+    // Check value of LDS while pumping and stop if the input vessel is empty
+    
 }; // End Class Pump
 
 #endif

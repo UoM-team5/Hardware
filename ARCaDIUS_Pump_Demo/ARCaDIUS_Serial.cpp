@@ -59,7 +59,8 @@ void ASerial::serialFlush() {
 void ASerial::ReturnDetails() {
   Serial.println("[sID" + (String)Device_ID +
                  " rID" + (String)Sender_ID +
-                 " PK6" +
+                 " PK8" +
+		             " DETAIL" +
                  " P" + (String)NumPump +
                  " V" + (String)NumValve +
                  " I" + (String)NumIrr +
