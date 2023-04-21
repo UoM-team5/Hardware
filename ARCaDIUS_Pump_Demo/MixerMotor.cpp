@@ -11,21 +11,12 @@ void MixerMotor:: StopMotor(){
   digitalWrite(E,LOW); //slow stop
 }
  
-void MixerMotor:: MotorHigh() {
-  analogWrite(E,150); 
+void MixerMotor:: SetSpeed(int PWM) {
+  analogWrite(E,100);
   digitalWrite(MP1,HIGH); //one way
   digitalWrite(MP2,LOW);
-  Serial.println("The mixer is mixing fast");
-}
-
-void MixerMotor:: MotorMedium() {
-  analogWrite(E,125); 
-  digitalWrite(MP1,HIGH); //one way
-  digitalWrite(MP2,LOW);
-}
-
-void MixerMotor:: MotorSlow() {
-  analogWrite(E,100); 
+  delay(500);
+  analogWrite(E,PWM); 
   digitalWrite(MP1,HIGH); //one way
   digitalWrite(MP2,LOW);
 }
