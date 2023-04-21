@@ -15,19 +15,10 @@ class MixerMotor
   MixerMotor(int motorPin1, int motorPin2, int Enable) {MP1 = motorPin1; MP2 = motorPin2; E = Enable;};
 
   void SetUpMotor();
-  // To be used in void setup()
 
   void StopMotor();
-  // Stops motor lol
 
-  void MotorHigh(); 
-  // Sets the motor speed to high
-
-  void MotorMedium();
-  // Sets the motor speed to medium
-
-  void MotorSlow(); 
-  // Sets the motor speed to low
+  void SetSpeed(int PWM);
 
 };
 #endif
