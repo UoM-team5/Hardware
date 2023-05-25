@@ -66,21 +66,11 @@ void loop() {
         Serial.println("The mixer number is: " + (String)Device.getMixer());
         Serial.println("The mixer speed is: " + (String)Device.getMixerSpeed());
         Serial.println("The mixer direction is: " + (String)Device.getMixerDir());
-        switch (Device.getMixerSpeed()) {
-          case 1: 
-            MagMix.MotorHigh();
-            break;
-          case 2: 
-            MagMix.MotorMedium();
-            break;
-          case 3: 
-            MagMix.MotorSlow();
-            break;
-          case 4:
-            MagMix.StopMotor();
-            break;
-          default:
-            break;
+        if (Device.getMixerSpeed() == 0) {
+          MagMix.StopMotor();
+        }
+        else {
+          MagMix.SetSpeed(Device.getMixerSpeed());
         }
         break;
 

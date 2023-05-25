@@ -4,7 +4,6 @@
 
 
   void LDSensor:: SetUpLDS() {
-    Serial.begin(9600);
     pinMode(Input,INPUT);
     }  
  
