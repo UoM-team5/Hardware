@@ -10,7 +10,6 @@ void setup() {
   Serial.begin(9600);
   delay(5000);
   shutter.Initialise();
-  
 }
 
 void loop() {
