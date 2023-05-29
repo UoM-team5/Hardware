@@ -59,8 +59,7 @@ void ASerial::serialFlush() {
 void ASerial::ReturnDetails() {
   Serial.println("[sID" + (String)Device_ID +
                  " rID" + (String)Sender_ID +
-                 " PK8" +
-		             " DETAIL" +
+                 " PK6" +
                  " P" + (String)NumPump +
                  " V" + (String)NumValve +
                  " I" + (String)NumIrr +
@@ -266,7 +265,7 @@ void ASerial::Shutter() {
 }
 
 void ASerial::readSensors() {
-  int PK_size = (NumBubble + NumTemp + NumLDS) * 2;
+  int PK_size = (NumBubble + NumTemp + NumLDS) * 2 + 1;
   String SenVal = "[sID" + (String)Device_ID + " rID" + (String)Sender_ID + " PK" + (String)PK_size + " SEN";
   for (int i = 0; i < NumTemp; i++) {
     SenVal = SenVal + " T" + (String)(i + 1) + " S" + (String)TempVal[i];
