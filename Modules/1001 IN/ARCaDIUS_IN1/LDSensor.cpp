@@ -5,11 +5,5 @@ void LDSensor:: setUp() {
 }
 
 bool LDSensor:: StatusLDS () {
-  Liquid_level = digitalRead(Input);
-  if (Liquid_level == HIGH) {
-    return true;
-  }
-  else {
-    return false;
-  }
+  return digitalRead(Input);
 }

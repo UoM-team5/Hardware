@@ -9,6 +9,7 @@ enum operation {
   VALVE,
   MIXER,
   DETAIL,
+  READ,
 };
 
 enum SENSOR {
