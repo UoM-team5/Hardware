@@ -3,7 +3,7 @@
 #include "MixerMotor.h"
 
 String DeviceDesc = "Module = shutter";
-int Device_ID = 1005;
+int Device_ID = 1006;
 int Sender_ID = 1000;
 int Num_of_Pumps = 0;
 int Num_of_Valves = 0;
