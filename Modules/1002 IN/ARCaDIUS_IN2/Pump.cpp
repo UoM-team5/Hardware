@@ -20,7 +20,12 @@ void Pump::setUp(void) {
 
 // Set direction and volume of pump
 void Pump::set_vol(float vol, bool direc) {
-  volume = abs(vol);
+  if(vol<0){
+    volume = -vol;
+  }
+  else{
+    volume = vol;
+  }
   dir = direc;
   Serial.println(volume);
   if (pump_type == 0) { // SERVO
