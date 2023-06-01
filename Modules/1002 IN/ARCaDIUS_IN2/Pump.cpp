@@ -27,6 +27,7 @@ void Pump::set_vol(float vol, bool direc) {
   else{
     volume = vol;
   }
+  //volume = abs(vol);
   dir = direc;
   Serial.println(volume);
   if (pump_type == 0) { // SERVO
