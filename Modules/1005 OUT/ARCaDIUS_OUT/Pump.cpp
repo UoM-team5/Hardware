@@ -1,5 +1,6 @@
 #include "Pump.h"
 #include "Servo.h"
+#include "math.h"
 
 // Setup
 void Pump::setUp(void) {
@@ -11,7 +12,7 @@ void Pump::setUp(void) {
     pinMode(dirStep, OUTPUT);
     pinMode(Step, OUTPUT);
     pinMode(EN, OUTPUT);
-    digitalWrite(EN, LOW);
+    digitalWrite(EN, HIGH);
   }
 } // End function
 
@@ -19,11 +20,21 @@ void Pump::setUp(void) {
 
 // Set direction and volume of pump
 void Pump::set_vol(float vol, bool direc) {
-  volume = abs(vol);
+  //Serial.println(vol);
+  if(vol<0){
+    volume = -vol;
+  }
+  else{
+    volume = vol;
+  }
+  //volume = abs(vol);
   dir = direc;
+  Serial.println(volume);
   if (pump_type == 0) { // SERVO
     float mlpersec = (0.0038 * volume) + 0.5967;
     uint32_t pumping_time = (volume / mlpersec) * 1000;
+    Serial.println(mlpersec);
+    Serial.println(pumping_time);
     flowrate = mlpersec;
     if (direc == 1) {
       serPump.write(550); //Clockwise maximum speed rotation (0 degrees)
@@ -37,17 +48,18 @@ void Pump::set_vol(float vol, bool direc) {
   }// End if servo
 
   if (pump_type == 1) { // STEPPER
+    digitalWrite(EN, LOW);
     digitalWrite(dirStep, direc);
-    for (uint32_t i = 0; i < vol * steps_per_ml; i++) {
+    for (uint32_t i = 0; i < volume * steps_per_ml; i++) {
       digitalWrite(Step, HIGH);
       delay(1);
       digitalWrite(Step, LOW);
       delay(1);
     }
+    digitalWrite(EN, HIGH);
   }// End if stepper
 
 }// End function
-
 
 
 // Stop pumping
