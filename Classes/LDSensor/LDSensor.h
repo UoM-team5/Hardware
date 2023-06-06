@@ -14,7 +14,8 @@ class LDSensor
     LDSensor(int in) {
       Input = in;
     };
-    // Constructor, takes one input represnting the pin number
+    // Constructor
+    //@param in: Input pin number
 
     void setUp();
     // Setup, to be used in void setup()
