@@ -10,6 +10,8 @@ Contents:
 - Tests: Arduino Builds of code used for testing components 
 
 To create a module you require:
-    - Arcadius_Demo
-    - Arcadius_Serial
-    - Component classes for required pumps, valves, sensors, etc.
+- Arcadius_Demo
+- Arcadius_Serial
+- Component classes for required pumps, valves, sensors, etc.
+
+
