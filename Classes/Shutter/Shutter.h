@@ -1,4 +1,5 @@
 #include <Arduino.h>
+//#include <ServoTimer2.h>
 #include <Servo.h>
 
 
@@ -20,7 +21,7 @@ class Shutter{
         // @param outputpin: arduino pin connection for control of the servo
 
         void Initialise();
-        //Initialises object, to be run in arduino setup 
+        //Initialises object, run in arduino setup 
 
         void goto_open (double desired);
         // Open loop control of servo position
@@ -41,6 +42,10 @@ class Shutter{
         // @param pos: Desired preset position, edit state above to include different positions
         // @param control: Set 0 to use goto_open, Set 1 to use goto_controlled
 
-
+        void timedExposure(state pos, unsigned int exposure_time, bool controller);
+        // Moves shutter to preset position then returns to original position after a set time has elapsed 
+        // @param pos: Desired preset position, edit state above to include different positions
+        // @para  exposure_time: Miliseconds  before returning to original position
+        // @param controller: Set 0 to use goto_open, Set 1 to use goto_controlled
 
 };

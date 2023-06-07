@@ -13,5 +13,3 @@ To create a module you require:
 - Arcadius_Demo
 - Arcadius_Serial
 - Component classes for required pumps, valves, sensors, etc.
-
-
