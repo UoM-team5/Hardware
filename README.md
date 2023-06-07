@@ -1,3 +1,4 @@
+# Hardware
 This Folder contains all the Arduino Code for the Arcadius Project 2023
 
 The Arduino code for the system hardware operates the slave to the python GUI in a Master-slave architecture, carrying out functions only when instructed to via serial communication.
