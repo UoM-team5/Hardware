@@ -275,7 +275,7 @@ void ASerial::readSensors() {
     SenVal = SenVal + " B" + (String)(i + 1) + " S" + (String)BubbleVal[i];
   }
   for (int i = 0; i < NumLDS; i++) {
-    SenVal = SenVal + " L" + (String)(i+1) + " S" + (String)LDSVal[i];
+    SenVal = SenVal + " L" + (String)(i + 1) + " S" + (String)LDSVal[i];
   }
   SenVal = SenVal + "]";
   Serial.println(SenVal);

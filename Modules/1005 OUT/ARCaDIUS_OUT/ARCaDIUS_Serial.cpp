@@ -180,6 +180,7 @@ void ASerial::analyse() {
       Shutter();
       break;
     case 'R':
+      op = READ;
       readSensors();
       break;
     case 'D':

@@ -1,25 +1,31 @@
 #include "ARCaDIUS_Serial.h"
+#include "OneWire.h"
+#include "DallasTemperature.h"
 #include "Valve.h"
 #include "Pump.h"
 
+#define ONE_WIRE_BUS 12
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
 String DeviceDesc = "Module = Output";
-int Device_ID = 1004;
+int Device_ID = 1005;
 int Sender_ID = 1000;
 int Num_of_Pumps = 1;
 int Num_of_Valves = 5;
 int Num_of_Shutter = 0;
 int Num_of_Mixer = 0;
-int Num_of_Temp = 0;
+int Num_of_Temp = 1;
+int Num_of_Liquid = 0;
 int Num_of_Bubble = 0;
 int ResetPin = 3;
 
-ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_Mixer, ResetPin);
+ASerial Device(DeviceDesc, Device_ID, Sender_ID, Num_of_Pumps, Num_of_Valves, Num_of_Shutter, Num_of_Temp, Num_of_Bubble, Num_of_Liquid, Num_of_Mixer, ResetPin);
 Valve Valve1(3, 65, 127);
 Valve Valve2(5, 65, 127);
 Valve Valve3(6, 65, 128);
 Valve Valve4(9, 65, 127);
 Valve Valve5(10, 66, 130);
-Pump P4(11);
+Pump P1(11);
 
 void setup() {
   // put your setup code here, to run once:
@@ -31,27 +37,27 @@ void setup() {
   Valve3.setUp();
   Valve4.setUp();
   Valve5.setUp();
-  P4.setUp();
+  P1.setUp();
+  sensors.begin();
+  
 }
 
 void loop() {
+  
   if (Device.GotCommand()) {
+    sensors.requestTemperatures();
+    Device.updateSensors(TEMP, 1, sensors.getTempCByIndex(0));
     switch (Device.GetCommand()) {
       case PUMP: 
-        Serial.println("pump number: " + (String)Device.getPump());
-        Serial.println("pump volume: " + (String)Device.getPumpMls());
-        switch (Device.getPump()) {//[sID1000 rID1004 PK3 P4 m5.00 D1]
-          case 4:
-            P4.set_vol(Device.getPumpMls(),Device.getPumpDir());
+        switch (Device.getPump()) {//[sID1000 rID1004 PK3 P1 m5.00]
+          case 1:
+            P1.set_vol(Device.getPumpMls(),Device.getPumpDir());
             break;
           default:
             break;
         }
         break;
       case MIXER: // Enter code for mixer here
-        Serial.println("The mixer number is: " + (String)Device.getMixer());
-        Serial.println("The mixer speed is: " + (String)Device.getMixerSpeed());
-        Serial.println("The mixer direction is: " + (String)Device.getMixerDir());
         break;
       case VALVE:
         switch (Device.getValve()) {//test [sID1000 rID1004 PK2 V1 S0]
